@@ -42,6 +42,7 @@ const register = async (req, res) => {
     verificationCode,
   });
 
+
   const verifyEmail = {
     to: email,
     subject: "Verify email",
@@ -50,11 +51,15 @@ const register = async (req, res) => {
 
   await sendEmail(verifyEmail);
 
+  const result = await User.create({ ...req.body, password: hashPassword });
+
+
   res.status(201).json({
     user: {
       email: result.email,
       subscription: result.subscription,
     }
+
   });
 };
 
@@ -92,6 +97,7 @@ const resendVerifyEmail = async (req, res) => {
 
   res.json({
     message: "Verify email sent",
+
   });
 };
 
@@ -172,4 +178,5 @@ module.exports = {
     getCurrent: ctrlWrapper(getCurrent),
     logout: ctrlWrapper(logout),
     updateAvatar: ctrlWrapper(updateAvatar),
+
 };
