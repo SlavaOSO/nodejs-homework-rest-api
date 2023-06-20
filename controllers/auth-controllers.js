@@ -51,8 +51,10 @@ const register = async (req, res) => {
   await sendEmail(verifyEmail);
 
   res.status(201).json({
-    email: newUser.email,
-    subscription: newUser.subscription,
+    user: {
+      email: result.email,
+      subscription: result.subscription,
+    }
   });
 };
 
@@ -115,6 +117,10 @@ const login = async (req, res) => {
 
   res.json({
     token,
+    user: {
+      email: email,
+      subscription: "starter"
+    }
   });
 };
 
