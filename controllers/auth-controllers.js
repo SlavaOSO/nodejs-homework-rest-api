@@ -37,6 +37,7 @@ const register = async (req, res) => {
     avatarURL,
   });
 
+  const result = await User.create({ ...req.body, password: hashPassword });
 
   res.status(201).json({
     user: {
